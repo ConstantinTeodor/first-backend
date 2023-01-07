@@ -5,6 +5,7 @@ namespace App\Models;
 use Faker\Core\DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  *  App\Models\Client
@@ -22,7 +23,7 @@ class Inchiriere extends Model
 {
     use HasFactory;
 
-    protected $table = 'tblInchirirere';
+    protected $table = 'tblInchiriere';
 
     protected $columns = [
         'idInchiriere' => [
@@ -50,6 +51,4 @@ class Inchiriere extends Model
             'label' => 'idLocatiePredare'
         ]
     ];
-
-    protected $primaryKey = 'idInchiriere';
 }

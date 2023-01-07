@@ -319,6 +319,12 @@
                 "responses": {
                     "200": {
                         "description": "Success"
+                    },
+                    "409": {
+                        "description": "Conflict! Datele se suprapun"
+                    },
+                    "403": {
+                        "description": "Clinetul selectat deja a inchiriat masina cu id-ul dat"
                     }
                 }
             }

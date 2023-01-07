@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inchiriere;
 use App\Models\Plata;
 use App\Services\PlataService;
 use Illuminate\Http\JsonResponse;
@@ -59,6 +60,18 @@ class PlataController extends Controller
     public function show($id): JsonResponse
     {
         $data = Plata::where('idPlata', '=', $id)->firstOrFail();
+        return response()->json($data, Response::HTTP_OK);
+    }
+
+    public function showClient($clientId): JsonResponse
+    {
+        $inchirieri = Inchiriere::all();
+        foreach ($inchirieri as $inchiriere) {
+            if ($inchiriere['idClient'] == $clientId) {
+                $data[] = Plata::where('idInchiriere', '=', $inchiriere['idInchiriere'])->first();
+            }
+        }
+
         return response()->json($data, Response::HTTP_OK);
     }
 

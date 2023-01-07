@@ -83,6 +83,6 @@ class Masina extends Model
             'tblInchiriere',
             'idMasina',
             'idClient',
-        );
+        )->withPivot(Inchiriere::$idMasina);
     }
 }

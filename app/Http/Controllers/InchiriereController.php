@@ -62,6 +62,12 @@ class InchiriereController extends Controller
         return response()->json($data, Response::HTTP_OK);
     }
 
+    public function showClient($idClient): JsonResponse
+    {
+        $data = Inchiriere::where('idClient', '=', $idClient)->get();
+        return response()->json($data, Response::HTTP_OK);
+    }
+
     /**
      * @OA\Put(
      *    path="/inchirieri",
@@ -191,16 +197,46 @@ class InchiriereController extends Controller
      *   @OA\Response(
      *        response=200,
      *        description="Success"
+     *    ),
+     *     @OA\Response(
+     *        response=409,
+     *        description="Conflict! Datele se suprapun"
+     *    ),
+     * @OA\Response(
+     *        response=403,
+     *        description="Clinetul selectat deja a inchiriat masina cu id-ul dat"
      *    )
      * )
      */
-    public function store(Request $request): JsonResponse
+    public function store(Request $request)//: JsonResponse
     {
+        $inchiriereMasini = Inchiriere::where('idMasina', '=', $request['idMasina'])->get();
+
+        foreach ($inchiriereMasini as $inchiriereMasina) {
+            if ($inchiriereMasina['idClient'] == $request['idClient']) {
+                return response()->json("Clinetul selectat deja a inchiriat masina cu id-ul dat",Response::HTTP_FORBIDDEN);
+            }
+            $reqDataInchiriere = date('Y-m-d', strtotime($request['dataInchiriere']));
+            $reqDataPredare = date('Y-m-d', strtotime($request['dataPredareLimita']));
+            $masinaInchiriere = date('Y-m-d', strtotime($inchiriereMasina['dataInchiriere']));
+            $masinaPredateEfectiva = date('Y-m-d', strtotime($inchiriereMasina['dataPredareEfectiva']));
+            $masinaPredareLimita = date('Y-m-d', strtotime($inchiriereMasina['dataPredareLimita']));
+            if ($reqDataInchiriere >= $masinaInchiriere && $reqDataInchiriere <= $masinaPredareLimita && $reqDataInchiriere <= $masinaPredateEfectiva) {
+                return response()->json("Datele se suprapun - data inchiriere",Response::HTTP_CONFLICT);
+            } else {
+                if ($reqDataPredare >= $masinaInchiriere && $reqDataPredare <= $masinaPredareLimita && $reqDataPredare <= $masinaPredateEfectiva) {
+                    return response()->json("Datele se suprapun - data predare",Response::HTTP_CONFLICT);
+                }
+            }
+        }
+
         $data = new Inchiriere;
         $this->inchiriereService->setProperties($data, $request->all());
         $data->save();
         return response()->json($data, Response::HTTP_OK);
     }
+
+
 
     /**
      * @OA\Delete(

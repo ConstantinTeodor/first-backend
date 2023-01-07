@@ -56,6 +56,6 @@ class Client extends Model
             'tblInchiriere',
             'idClient',
             'idMasina'
-        );
+        )->withPivot(Inchiriere::$idClient);
     }
 }
