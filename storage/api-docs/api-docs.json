@@ -327,6 +327,36 @@
                         "description": "Clinetul selectat deja a inchiriat masina cu id-ul dat"
                     }
                 }
+            },
+            "delete": {
+                "tags": [
+                    "Inchirieri"
+                ],
+                "summary": "Sterge inchirierea cu id-ul dat",
+                "description": "Sterge inchirierea cu id-ul dat",
+                "operationId": "9cab23358f29d6d49b60b14e0d8d05da",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "description": "",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
             }
         },
         "/inchirieri/{id}": {
@@ -342,31 +372,6 @@
                         "name": "id",
                         "in": "path",
                         "description": "Id-ul inchirierii dorit",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        },
-                        "example": 30
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Inchirieri"
-                ],
-                "summary": "Sterge inchirierea cu id-ul dat",
-                "description": "Sterge inchirierea cu id-ul dat",
-                "operationId": "248c1f7752815d2d3a3c155f5c0f2f53",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Id-ul inchirierii dorite",
                         "required": true,
                         "schema": {
                             "type": "integer"

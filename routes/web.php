@@ -54,7 +54,7 @@ Route::get('/inchirieri', [InchiriereController::class, 'index']);
 Route::get('/inchirieri/{id}', [InchiriereController::class, 'show']);
 Route::put('/inchirieri', [InchiriereController::class, 'update']);
 Route::post('/inchirieri', [InchiriereController::class, 'store']);
-Route::delete('/inchirieri/{id}', [InchiriereController::class, 'destroy']);
+Route::delete('/inchirieri', [InchiriereController::class, 'destroy']);
 
 Route::get('/plati/client/{id}', [PlataController::class, 'showClient']);
 Route::get('/inchirieri/client/{id}', [InchiriereController::class, 'showClient']);

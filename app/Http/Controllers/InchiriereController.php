@@ -133,7 +133,7 @@ class InchiriereController extends Controller
      *    )
      * )
      */
-    public function update(Request $request)//: JsonResponse
+    public function update(Request $request): JsonResponse
     {
         $id = $request['idInchiriere'];
         Inchiriere::where('idInchiriere', '=', $id)->update([
@@ -247,19 +247,20 @@ class InchiriereController extends Controller
 
     /**
      * @OA\Delete(
-     *    path="/inchirieri/{id}",
+     *    path="/inchirieri",
      *    summary="Sterge inchirierea cu id-ul dat",
      *    tags={"Inchirieri"},
      *    description="Sterge inchirierea cu id-ul dat",
-     *    @OA\Parameter(
-     *        name="id",
-     *        description="Id-ul inchirierii dorite",
-     *        required=true,
-     *        in="path",
-     *        example=30,
-     *        @OA\Schema(
-     *            type="integer"
-     *        )
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="id",
+     *                  type="integer",
+     *                  description="",
+     *                  example=1,
+     *              ),
+     *     )
      *    ),
      *   @OA\Response(
      *        response=200,
@@ -267,9 +268,9 @@ class InchiriereController extends Controller
      *    )
      * )
      */
-    public function destroy($id): JsonResponse
+    public function destroy(Request $request): JsonResponse
     {
-        $data = Inchiriere::where('idInchiriere', '=', $id)->delete();
+        $data = Inchiriere::where('idInchiriere', '=', $request['id'])->delete();
         //$data->delete();
         return response()->json("DELETED", Response::HTTP_OK);
     }
