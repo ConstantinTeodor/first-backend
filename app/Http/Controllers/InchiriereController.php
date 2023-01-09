@@ -133,12 +133,19 @@ class InchiriereController extends Controller
      *    )
      * )
      */
-    public function update(Request $request): JsonResponse
+    public function update(Request $request)//: JsonResponse
     {
-        $data = Inchiriere::where('idInchiriere', '=', $request['idInchiriere'])->firstOrFail();
-        $this->inchiriereService->setProperties($data, $request->all());
-        $data->save();
-        return response()->json($data, Response::HTTP_OK);
+        $id = $request['idInchiriere'];
+        Inchiriere::where('idInchiriere', '=', $id)->update([
+            'idClient' => $request['idClient'],
+            'idMasina' => $request['idMasina'],
+            'dataInchiriere' => $request['dataInchiriere'],
+            'dataPredareLimita' => $request['dataPredareLimita'],
+            'dataPredareEfectiva' => $request['dataPredareEfectiva'],
+            'idLocatieInchiriere' => $request['idLocatieInchiriere'],
+            'idLocatiePredare' => $request['idLocatiePredare']
+        ]);
+        return response()->json("UPDATED", Response::HTTP_OK);
     }
 
     /**
@@ -262,8 +269,8 @@ class InchiriereController extends Controller
      */
     public function destroy($id): JsonResponse
     {
-        $data = Inchiriere::where('idInchiriere', '=', $id)->firstOrFail();
-        $data->delete();
+        $data = Inchiriere::where('idInchiriere', '=', $id)->delete();
+        //$data->delete();
         return response()->json("DELETED", Response::HTTP_OK);
     }
 }
